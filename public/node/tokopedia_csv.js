@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+const puppeteer = require('puppeteer');
 
 const pages = process.argv[3];
 const prod_query = process.argv[2];

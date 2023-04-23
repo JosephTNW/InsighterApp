@@ -18,4 +18,18 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/original', function () {
+    return view('welcome');
+});
+
 Route::post('/', [InsightController::class, 'scrapTokopedia'])->name('scrapTokopedia');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
