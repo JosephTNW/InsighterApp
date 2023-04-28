@@ -16,13 +16,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
-
-Route::get('/original', function () {
-    return view('welcome');
-});
+})->name('home');
 
 Route::post('/', [InsightController::class, 'scrapTokopedia'])->name('scrapTokopedia');
+
+Route::get('/history', [InsightController::class, 'getScrapHistory'])->name('getScrapHistory');
+
+Route::get('/history/{instance_id}', [InsightController::class, 'getScrapData'])->name('getScrapData');
+
+Route::get('/back', function () {
+    // Check if the user is authenticated
+    $authenticated = auth()->check();
+
+    // Redirect the user back to the previous page
+    return back()->with('authenticated', $authenticated);
+});
 
 Route::middleware([
     'auth:sanctum',
@@ -30,6 +38,8 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('home');
     })->name('dashboard');
+
+    Route::post('/save-csv', [InsightController::class, 'saveCsvToDatabase'])->name('save_csv_to_database');
 });

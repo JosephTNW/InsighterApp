@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Insight extends Model
 {
     use HasFactory;
+
+    protected $table = 'results';
+    public $timestamps = false;
+
+    public function insights()
+    {
+        return $this->hasMany(Insight::class, 'instance_id');
+    }
 }
