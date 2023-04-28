@@ -32,4 +32,6 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::post('/save', [InsightController::class, 'saveToDatabase'])->name('saveToDatabase');
 });
