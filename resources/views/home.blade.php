@@ -3,6 +3,7 @@
 
 <head>
     <title>Insighter</title>
+    <link rel="icon" type="image/png" href="{{ asset('InsighterLogo.png') }}">
 </head>
 
 <body>
@@ -59,7 +60,7 @@
             @endauth
 
         </x-app-layout>
-    @endauth
+    @else
 <nav>
                 @if (Route::has('login'))
                     <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
@@ -80,6 +81,7 @@
             </nav>
 
             <div style="text-align: center; margin-top: 50px;">
+                <img src="InsighterLogo.png" style="width="256px"; height="256px""/>
                 <form action="{{ route('scrapTokopedia') }}" method="POST">
                     @csrf
                     <label for="inputValue">Product Name:</label>
@@ -108,6 +110,7 @@
                     </div>
                 </form>
             @endauth
+    @endauth
 
 </body>
 

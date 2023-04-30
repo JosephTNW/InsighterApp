@@ -114,6 +114,22 @@ class InsightController extends Controller
         return InsightController::toIdr($median);
     }
 
+    public static function countMedian(Array $arr)
+    {
+        $count = sizeof($arr);
+        $mid = floor(($count - 1) / 2);
+
+        if ($count % 2) {
+            $median = $arr[$mid];
+        } else {
+            $lo = $arr[$mid];
+            $hi = $arr[$mid + 1];
+            $median = ($lo + $hi) / 2;
+        }
+
+        return $median;
+    }
+
     public static function getRange($model)
     {
         $sortedPrice = InsightController::processPrice($model);
@@ -127,17 +143,17 @@ class InsightController extends Controller
         $sortedPrice = InsightController::processPrice($model);
         $count = sizeof($sortedPrice);
         $mid = floor(($count - 1) / 2);
-        $lowerQuartile = InsightController::getMedian(array_slice($sortedPrice, 0, $mid));
+        $lowerQuartile = InsightController::countMedian(array_slice($sortedPrice, 0, $mid));
 
         return InsightController::toIdr($lowerQuartile);
     }
 
-    public static function getQ2($model)
+    public static function getQ3($model)
     {
         $sortedPrice = InsightController::processPrice($model);
         $count = sizeof($sortedPrice);
         $mid = floor(($count - 1) / 2);
-        $upperQuartile = InsightController::getMedian(array_slice($sortedPrice, $mid + 1));
+        $upperQuartile = InsightController::countMedian(array_slice($sortedPrice, $mid + 1));
 
         return InsightController::toIdr($upperQuartile);
     }

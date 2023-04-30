@@ -2,6 +2,8 @@
 
 <head>
     <title>{{ $scrapTitle }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('InsighterLogo.png') }}">
+
 </head>
 
 <body>
@@ -9,6 +11,8 @@
         $average = App\Http\Controllers\InsightController::getAverage($scrapData);
         $median = App\Http\Controllers\InsightController::getMedian($scrapData);
         $range = App\Http\Controllers\InsightController::getRange($scrapData);
+        $q1 = App\Http\Controllers\InsightController::getQ1($scrapData);
+        $q3 = App\Http\Controllers\InsightController::getQ3($scrapData);
     @endphp
 
     <x-app-layout>
@@ -50,33 +54,33 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 text-center">
-                <div class="flex justify-between w-full">
+                <div class="flex justify-between w-full gap-4">
                     <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
                             <h3>Average</h3>
                             <br>
-                            <p>{{ $average }}</p>
+                            <p><b>{{ $average }}</b></p>
                         </div>
                     </div>
                     <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
-                            <h3>Q1</h3>
+                            <h3>Lower Quartile (Q1)</h3>
                             <br>
-                            <p>{{ $average }}</p>
+                            <p><b>{{ $q1 }}</b></p>
                         </div>
                     </div>
                     <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
-                            <h3>Median (Q2)</h3>
+                            <h3>Median</h3>
                             <br>
-                            <p>{{ $median }}</p>
+                            <p><b>{{ $median }}</b></p>
                         </div>
                     </div>
                     <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
-                            <h3>Q3</h3>
+                            <h3>Upper Quartile (Q3)</h3>
                             <br>
-                            <p>{{ $average }}</p>
+                            <p><b>{{ $q3 }}</b></p>
                         </div>
                     </div>
                     <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">

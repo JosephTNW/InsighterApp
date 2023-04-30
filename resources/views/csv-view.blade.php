@@ -10,6 +10,8 @@
         $average = App\Http\Controllers\InsightController::getAverage($model);
         $median = App\Http\Controllers\InsightController::getMedian($model);
         $range = App\Http\Controllers\InsightController::getRange($model);
+        $q1 = App\Http\Controllers\InsightController::getQ1($model);
+        $q3 = App\Http\Controllers\InsightController::getQ3($model);
     @endphp
     @auth
         <x-app-layout>
@@ -31,8 +33,8 @@
                     </div>
                 @endif
             </nav>
-            <h1>{{ $scrapTitle }} Scrapping Result</h1>
-            <div class="py-12">
+            <h1 class="text-center py-5" >{{ $scrapTitle }} Scrapping Result</h1>
+            <div class="py-7">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                         <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
@@ -63,26 +65,40 @@
 
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div class="flex justify-between w-full">
+                    <div class="flex justify-between w-full text-center gap-4">
                         <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                             <div class="p-6 bg-white border-b border-gray-200">
                                 <h3>Average</h3>
                                 <br>
-                                <p>{{ $average }}</p>
+                                <p><b>{{ $average }}</b></p>
+                            </div>
+                        </div>
+                        <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                            <div class="p-6 bg-white border-b border-gray-200">
+                                <h3>Lower Quartile (Q1)</h3>
+                                <br>
+                                <p><b>{{ $q1 }}</b></p>
                             </div>
                         </div>
                         <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                             <div class="p-6 bg-white border-b border-gray-200">
                                 <h3>Median</h3>
                                 <br>
-                                <p>{{ $median }}</p>
+                                <p><b>{{ $median }}</b></p>
+                            </div>
+                        </div>
+                        <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                            <div class="p-6 bg-white border-b border-gray-200">
+                                <h3>Upper Quartile (Q3)</h3>
+                                <br>
+                                <p><b>{{ $q3 }}</b></p>
                             </div>
                         </div>
                         <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                             <div class="p-6 bg-white border-b border-gray-200">
                                 <h3>Range</h3>
                                 <br>
-                                <p>{{ $range }}</p>
+                                <p><b>{{ $range }}</b></p>
                             </div>
                         </div>
                     </div>
@@ -154,8 +170,8 @@
         </div>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-between">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
+                <div class="flex justify-between text-center gap-4">
                     <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
                             <h3>Average</h3>
@@ -165,9 +181,23 @@
                     </div>
                     <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
+                            <h3>Lower Quartile (Q1)</h3>
+                            <br>
+                            <p>{{ $q1 }}</p>
+                        </div>
+                    </div>
+                    <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                        <div class="p-6 bg-white border-b border-gray-200">
                             <h3>Median</h3>
                             <br>
                             <p>{{ $median }}</p>
+                        </div>
+                    </div>
+                    <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                        <div class="p-6 bg-white border-b border-gray-200">
+                            <h3>Upper Quartile (Q3)</h3>
+                            <br>
+                            <p>{{ $q3 }}</p>
                         </div>
                     </div>
                     <div class="w-1/3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -184,12 +214,14 @@
 
 
         @auth
+        <div style="text-align: center; justify-content: center;">
             <form action="{{ route('save_csv_to_database') }}" method="POST">
                 @csrf
                 <input type="hidden" name="csv_data" value="{{ $csv_output }}">
                 <input type="hidden" name="scrap_title" value="{{ $scrapTitle }}">
                 <button type="submit">Save to Database</button>
             </form>
+            </div>
         @else
             <a href="{{ route('login') }}" style="display: inline-block; margin-right: 10px;">Login</a>
             <p style="display: inline-block; margin-right: 10px;">or</p>
